@@ -1,0 +1,38 @@
+.sidenavCont{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 14rem;
+    background: white;
+    justify-content: space-between;
+}
+
+.brandLogo{
+    padding: 2rem;
+}
+
+.topPart{
+    width: 100%;
+}
+
+.linkContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.link{
+    text-decoration: none;
+    color: #676767;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.active-link{
+    background: #F3F3F1;
+    color: #1877F2;
+    position: relative;
+}
+
+

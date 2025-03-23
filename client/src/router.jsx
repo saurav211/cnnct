@@ -1,0 +1,90 @@
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import { useEffect, useState } from "react";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import Preferences from "./components/Preferences";
+import Landing from "./components/Landing";
+import Events from "./components/Events";
+import Availability from "./components/Availability";
+import Activity from "./components/Activity";
+import App from "./App";
+import Booking from "./components/Booking";
+import Settings from "./components/Settings";
+
+const PrivateRoute = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsAuthenticated(!!token);
+  }, []);
+  // console.log("isAuthenticated:", isAuthenticated);
+  return isAuthenticated ? children : children;
+};
+
+const AppRouter = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/" element={<Landing />} />
+        <Route
+          path="/preferences"
+          element={
+            <PrivateRoute>
+              <Preferences />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/events"
+          element={
+            <PrivateRoute>
+              <App Component={Events}/>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/availability"
+          element={
+            <PrivateRoute>
+              <App Component={Availability}/>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/activity"
+          element={
+            <PrivateRoute>
+              <App Component={Activity}/>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/bookings"
+          element={
+            <PrivateRoute>
+              <App Component={Booking}/>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <PrivateRoute>
+              <App Component={Settings}/>
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </Router>
+  );
+};
+
+export default AppRouter;

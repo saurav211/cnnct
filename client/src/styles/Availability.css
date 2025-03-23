@@ -1,0 +1,28 @@
+.availability-container {
+  padding: 1rem;
+}
+
+.availability-header {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-top: 2rem;
+}
+.availability-subheader {
+  font-size: 1.2rem;
+}
+.availability-select {
+  margin-top: 3rem;
+}
+
+.template-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.template-option .material-symbols-outlined {
+  font-size: 1.3rem;
+}
+
+.availibility-body {
+  margin-top: 2rem;
+}

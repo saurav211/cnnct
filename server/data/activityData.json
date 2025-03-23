@@ -1,0 +1,37 @@
+[
+  {
+    "day": "Sunday",
+    "isAvailable": false,
+    "availableTimes": []
+  },
+  {
+    "day": "Monday",
+    "isAvailable": true,
+    "availableTimes": []
+  },
+  {
+    "day": "Tuesday",
+    "isAvailable": true,
+    "availableTimes": []
+  },
+  {
+    "day": "Wednesday",
+    "isAvailable": true,
+    "availableTimes": []
+  },
+  {
+    "day": "Thursday",
+    "isAvailable": true,
+    "availableTimes": []
+  },
+  {
+    "day": "Friday",
+    "isAvailable": true,
+    "availableTimes": []
+  },
+  {
+    "day": "Saturday",
+    "isAvailable": true,
+    "availableTimes": []
+  }
+]

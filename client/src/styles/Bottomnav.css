@@ -1,0 +1,29 @@
+.bottomLinkContainer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.bottom-link{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background: #F3F3F1;
+    color: #676767;
+    text-decoration: none;
+}
+
+.bottom-link .material-symbols-outlined{
+    font-size: 1.2rem;
+}
+
+.active-bottom-link{
+    background: #F3F3F1;
+    color: #1877F2;
+    position: relative;
+}

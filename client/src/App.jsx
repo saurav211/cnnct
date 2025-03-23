@@ -1,33 +1,29 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import SideNav from './components/Sidenav';
+import Topnav from './components/Topnav';
+import BottomNav from './components/BottomNav';
 
-function App() {
-  const [count, setCount] = useState(0)
+function App({ Component }) {
+  const [width, setWidth] = useState(window.innerWidth);
+  const updateWindowDimensions = () => {
+    setWidth(window.innerWidth);
+  };
+  window.addEventListener("resize", updateWindowDimensions);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className={width > 768 ? 'containerDesk' : 'containerMobile'}>
+        {width > 768 ? <SideNav></SideNav> : <Topnav></Topnav>}
+        <div className='componentApp'>
+          <Component/>
+        </div>
+        {width < 768 &&
+          <div className='bottomNavContainer'>
+            <BottomNav/>
+          </div>
+        }
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
