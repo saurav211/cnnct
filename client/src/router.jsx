@@ -91,6 +91,14 @@ const AppRouter = () => {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/edit-event/:id"
+          element={
+            <PrivateRoute>
+              <App Component={AddEvent} />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </Router>
   );

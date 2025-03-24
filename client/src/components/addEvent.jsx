@@ -5,7 +5,7 @@ import { Calendar } from "primereact/calendar";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ColorPicker } from "primereact/colorpicker";
 import profile from "../assets/profile.png";
 import { Toast } from "primereact/toast";
@@ -19,6 +19,7 @@ const AddEvent = () => {
   const [date, setDate] = useState(null);
   const [time, setTime] = useState(null);
   const [hostList, setHostList] = useState([]);
+  const { id } = useParams();
 
   useEffect(() => {
     const data = localStorage.getItem("token");
@@ -32,6 +33,34 @@ const AddEvent = () => {
     console.log("user", user);
     setHostList([user]);
   }, []);
+
+  useEffect(() => {
+    if (id) {
+      fetchEventDetails(id);
+    }
+  }, [id]);
+
+  const fetchEventDetails = async (eventId) => {
+    try {
+      const response = await api.get(`/event/${eventId}`);
+      const eventData = response.data;
+      setFormData({
+        title: eventData.title,
+        password: eventData.password,
+        backgroundColor: eventData.backgroundColor,
+        hostname: eventData.hostname,
+        description: eventData.description,
+        dateTime: new Date(eventData.dateTime),
+        duration: eventData.duration,
+        link: eventData.link,
+        users: eventData.users.map((user) => user.email),
+      });
+      setDate(new Date(eventData.dateTime));
+      setTime(new Date(eventData.dateTime));
+    } catch (error) {
+      console.error("Error fetching event details:", error);
+    }
+  };
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -144,16 +173,25 @@ const AddEvent = () => {
 
     console.log("formData", formData);
 
-    const response = await api.post("/event/create", formData);
-    console.log("Response", response);
-    if (response && response.status == 201) {
-      toast.current.show({
-        severity: "success",
-        summary: response.data.message,
-        detail: "",
-        life: 3000,
-      });
-      navigate("/events");
+    try {
+      let response;
+      if (id) {
+        response = await api.put(`/event/update/${id}`, formData);
+      } else {
+        response = await api.post("/event/create", formData);
+      }
+      console.log("Response", response);
+      if (response && response.status == 201) {
+        toast.current.show({
+          severity: "success",
+          summary: response.data.message,
+          detail: "",
+          life: 3000,
+        });
+        navigate("/events");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
     }
   };
   const validateEmail = (email) => {
@@ -180,14 +218,18 @@ const AddEvent = () => {
     <div className="addEventCont">
       <Toast ref={toast} />
       <div className="pageTitleCont">
-        <div className="pageHeader">Create Event</div>
+        <div className="pageHeader">{id ? "Edit Event" : "Create Event"}</div>
         <div className="pageSubHeader">
-          Create events to share for people to book on your calendar. New
+          {id
+            ? "Edit the details of your event."
+            : "Create events to share for people to book on your calendar."}
         </div>
       </div>
       <div className="addEventBody">
         <div className="addEventCard">
-          <div className="addEventHeader">Add Event</div>
+          <div className="addEventHeader">
+            {id ? "Edit Event" : "Add Event"}
+          </div>
           {step == 1 ? (
             <>
               <div className="formGroupBody">

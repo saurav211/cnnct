@@ -6,6 +6,8 @@ const {
   updateEvent,
   getUserEvents,
   updateUserStatus,
+  deleteEvent,
+  getEventById,
 } = require("./event.controller");
 const authenticate = require("../middleware/validator");
 const router = express.Router();
@@ -16,5 +18,7 @@ router.get("/getEvents", authenticate, getEvents);
 router.put("/update/:id", authenticate, updateEvent);
 router.get("/getUserEvents", authenticate, getUserEvents);
 router.post("/updateUserStatus", authenticate, updateUserStatus);
+router.delete("/delete/:id", authenticate, deleteEvent);
+router.get("/:id", authenticate, getEventById);
 
 module.exports = router;

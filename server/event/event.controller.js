@@ -15,7 +15,7 @@ const createEvent = async (req, res) => {
 
     const event = new Event({ ...req.body, start, end, users: userList });
     await event.save();
-    res.status(201).json({ message: "Event created successfully", });
+    res.status(201).json({ message: "Event created successfully" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -51,7 +51,8 @@ const checkTimeAvailability = async (req, res) => {
 
 const getEvents = async (req, res) => {
   try {
-    const events = await Event.find({ "users.userId": req.user._id });
+    const events = await Event.find({ "hostname.id": req.user._id });
+
     res.json(events);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -60,9 +61,27 @@ const getEvents = async (req, res) => {
 
 const updateEvent = async (req, res) => {
   try {
-    const event = await Event.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+    const e = await Event.findById(req.params.id);
+    const userList = e.users.map((user) => ({
+      email: user.email,
+      status: user.status,
+    }));
+
+    req.body.users.forEach((user) => {
+      const existingUser = userList.find((u) => u.email === user);
+      if (existingUser) {
+        existingUser.status = req.body.status || existingUser.status;
+      } else {
+        userList.push({ email: user, status: "Pending" });
+      }
     });
+    const event = await Event.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body, users: userList },
+      {
+        new: true,
+      }
+    );
     res.json(event);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -96,6 +115,27 @@ const updateUserStatus = async (req, res) => {
   }
 };
 
+const deleteEvent = async (req, res) => {
+  try {
+    await Event.findByIdAndDelete(req.params.id);
+    res.json({ message: "Event deleted successfully" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getEventById = async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id);
+    if (!event) {
+      return res.status(404).json({ error: "Event not found" });
+    }
+    res.json(event);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   createEvent,
   checkTimeAvailability,
@@ -103,4 +143,6 @@ module.exports = {
   updateEvent,
   getUserEvents,
   updateUserStatus,
+  deleteEvent,
+  getEventById,
 };

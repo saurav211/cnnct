@@ -7,3 +7,53 @@
 .eventCont {
   padding: 1rem;
 }
+
+.eventBodyCont {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.event-card {
+  min-width: 20rem;
+  max-width: 30rem;
+  border-radius: 10px;
+  overflow: hidden;
+  flex: 1;
+}
+
+.event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 14px;
+}
+
+.p-card-content {
+  padding: 14px;
+  padding-top: 1rem;
+}
+
+.event-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-top: solid 2px lightgray;
+  padding: 0;
+}
+.p-card-header {
+  height: 4rem;
+}
+
+.p-card-footer {
+  padding: 0;
+}
+
+.p-card-body {
+  padding: 0;
+}
+
+.p-inputswitch {
+  width: 2.9rem;
+  height: 1.5rem;
+}
