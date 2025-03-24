@@ -22,9 +22,11 @@ const Availability = () => {
 
   return (
     <div className="availability-container">
-      <div className="availability-header">Availability</div>
-      <div className="availability-subheader">
-        Configure times when you are available for bookings
+      <div className="pageTitleCont">
+        <div className="pageHeader">Availability</div>
+        <div className="pageSubHeader">
+          Configure times when you are available for bookings
+        </div>
       </div>
       <div className="availability-select">
         <SelectButton

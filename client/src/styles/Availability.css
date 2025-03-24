@@ -2,14 +2,6 @@
   padding: 1rem;
 }
 
-.availability-header {
-  font-size: 2.2rem;
-  font-weight: 600;
-  margin-top: 2rem;
-}
-.availability-subheader {
-  font-size: 1.2rem;
-}
 .availability-select {
   margin-top: 3rem;
 }

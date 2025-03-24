@@ -17,3 +17,19 @@
 .componentApp {
   flex: 1;
 }
+
+.pageTitleCont {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  margin-top: 2rem;
+}
+.pageHeader {
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+.pageSubHeader {
+  font-size: 1.2rem;
+}

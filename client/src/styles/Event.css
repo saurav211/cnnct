@@ -1,0 +1,9 @@
+.eventHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.eventCont {
+  padding: 1rem;
+}

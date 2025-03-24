@@ -15,6 +15,7 @@ import Activity from "./components/Activity";
 import App from "./App";
 import Booking from "./components/Booking";
 import Settings from "./components/Settings";
+import AddEvent from "./components/addEvent";
 
 const PrivateRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,7 +47,7 @@ const AppRouter = () => {
           path="/events"
           element={
             <PrivateRoute>
-              <App Component={Events}/>
+              <App Component={Events} />
             </PrivateRoute>
           }
         />
@@ -54,7 +55,7 @@ const AppRouter = () => {
           path="/availability"
           element={
             <PrivateRoute>
-              <App Component={Availability}/>
+              <App Component={Availability} />
             </PrivateRoute>
           }
         />
@@ -62,7 +63,7 @@ const AppRouter = () => {
           path="/activity"
           element={
             <PrivateRoute>
-              <App Component={Activity}/>
+              <App Component={Activity} />
             </PrivateRoute>
           }
         />
@@ -70,7 +71,7 @@ const AppRouter = () => {
           path="/bookings"
           element={
             <PrivateRoute>
-              <App Component={Booking}/>
+              <App Component={Booking} />
             </PrivateRoute>
           }
         />
@@ -78,7 +79,15 @@ const AppRouter = () => {
           path="/settings"
           element={
             <PrivateRoute>
-              <App Component={Settings}/>
+              <App Component={Settings} />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/add-event"
+          element={
+            <PrivateRoute>
+              <App Component={AddEvent} />
             </PrivateRoute>
           }
         />

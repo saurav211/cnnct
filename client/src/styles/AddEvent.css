@@ -1,0 +1,119 @@
+.addEventCont {
+  padding: 1rem;
+}
+.addEventBody {
+  display: flex;
+}
+
+.addEventCard {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  border-radius: 1rem;
+  background: white;
+  margin-top: 2rem;
+}
+
+.addEventHeader {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: var(--primary-color);
+  font-size: 2rem;
+  padding: 1rem;
+  font-weight: 600;
+  padding-bottom: 2.5rem;
+  border-bottom: solid 2px lightgray;
+}
+
+.formGroupBody {
+  border-bottom: solid 2px lightgray;
+  margin-bottom: 1rem;
+}
+
+.formGroup {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.formLabel {
+  font-size: 1.2rem;
+  width: 30%;
+  padding-left: 10%;
+}
+
+.formInput {
+  width: 60%;
+}
+
+.formInput input {
+  width: 100%;
+}
+.formInput textarea {
+  width: 100%;
+}
+
+.formRequired {
+  color: red;
+}
+.formInputYear input {
+  width: 7rem;
+}
+.formInputTime {
+  margin-left: 1rem;
+}
+.formInputTime input {
+  width: 6rem;
+}
+
+.formBtnCont {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+
+.formGroupBack {
+  padding: 1rem;
+  padding-left: 8%;
+}
+.formBackTitle {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+.formBackGround {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 30rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+}
+
+.predefinedColorCont {
+  padding-left: 8%;
+}
+
+.predefinedHeader {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.predefinedColorGroup {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.preDefinedColor {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.colorSelect {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
