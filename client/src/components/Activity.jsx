@@ -1,18 +1,19 @@
-import { useState, useEffect, act } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Checkbox } from "primereact/checkbox";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
+import { Toast } from "primereact/toast";
 import api from "../interceptor";
 import "../styles/Activity.css";
 import { Calendar } from "primereact/calendar";
 
 const Activity = () => {
   const [activities, setActivities] = useState([]);
-
   const [count, setCount] = useState(0);
   const [checked, setChecked] = useState(false);
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
+  const toast = useRef(null);
 
   useEffect(() => {
     const fetchActivities = async () => {
@@ -25,7 +26,12 @@ const Activity = () => {
         });
         setActivities(newActivities);
       } catch (error) {
-        console.error("Error fetching activities:", error);
+        toast.current.show({
+          severity: "error",
+          summary: "Error",
+          detail: "Error fetching activities",
+          life: 3000,
+        });
       }
     };
     fetchActivities();
@@ -41,8 +47,19 @@ const Activity = () => {
         endTime,
       });
       setCount(count + 1);
+      toast.current.show({
+        severity: "success",
+        summary: "Success",
+        detail: "Time added successfully",
+        life: 3000,
+      });
     } catch (error) {
-      console.error("Error adding time:", error);
+      toast.current.show({
+        severity: "error",
+        summary: "Error",
+        detail: "Error adding time",
+        life: 3000,
+      });
     }
   };
 
@@ -53,8 +70,19 @@ const Activity = () => {
         timeId,
       });
       setCount(count + 1);
+      toast.current.show({
+        severity: "success",
+        summary: "Success",
+        detail: "Time deleted successfully",
+        life: 3000,
+      });
     } catch (error) {
-      console.error("Error deleting time:", error);
+      toast.current.show({
+        severity: "error",
+        summary: "Error",
+        detail: "Error deleting time",
+        life: 3000,
+      });
     }
   };
 
@@ -67,13 +95,25 @@ const Activity = () => {
         isAvailable,
       });
       setCount(count + 1);
+      toast.current.show({
+        severity: "success",
+        summary: "Success",
+        detail: "Availability updated successfully",
+        life: 3000,
+      });
     } catch (error) {
-      console.error("Error updating availability:", error);
+      toast.current.show({
+        severity: "error",
+        summary: "Error",
+        detail: "Error updating availability",
+        life: 3000,
+      });
     }
   };
 
   return (
     <div className="activity-container-card">
+      <Toast ref={toast} />
       <div className="activity-container-card-header">
         <div className="activity-d">
           <div className="activity-d-1">Activity</div>

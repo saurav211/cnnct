@@ -1,0 +1,47 @@
+.settings-container {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin-top: 2rem;
+}
+
+.settings-container h2 {
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+  color: #333;
+}
+
+.settings-container p {
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  color: #666;
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-form h3 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.settings-form label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.settings-form .p-inputtext,
+.settings-form .p-password {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.settings-form .p-button {
+  width: 100px;
+  align-self: flex-end;
+}

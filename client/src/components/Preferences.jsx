@@ -1,35 +1,53 @@
-import { useState, useEffect } from 'react';
-import api from '../interceptor';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from "react";
+import { Toast } from "primereact/toast";
+import api from "../interceptor";
+import { useNavigate } from "react-router-dom";
 
 const Preferences = () => {
-  const [username, setUsername] = useState('');
-  const [profession, setProfession] = useState('');
+  const [username, setUsername] = useState("");
+  const [profession, setProfession] = useState("");
   const navigate = useNavigate();
+  const toast = useRef(null);
 
-  useEffect(() => {
-   
-  }, []);
+  useEffect(() => {}, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post('/user/preferences', { username, profession });
+      const response = await api.post("/user/preferences", {
+        username,
+        profession,
+      });
       const data = response.data;
       if (data.message) {
-        console.log('Preferences updated successfully:', data.message); // Add logging
-        navigate('/events');
-        alert(data.message);
+        toast.current.show({
+          severity: "success",
+          summary: "Success",
+          detail: data.message,
+          life: 3000,
+        });
+        navigate("/events");
       } else {
-        alert(data.error);
+        toast.current.show({
+          severity: "error",
+          summary: "Error",
+          detail: data.error,
+          life: 3000,
+        });
       }
     } catch (error) {
-      alert(error.response.data.error);
+      toast.current.show({
+        severity: "error",
+        summary: "Error",
+        detail: error.response.data.error,
+        life: 3000,
+      });
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <Toast ref={toast} />
       <h2>Preferences</h2>
       <input
         type="text"

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { Toast } from "primereact/toast";
 import api from "../interceptor";
 import { jwtDecode } from "jwt-decode";
 import "../styles/Login.css";
@@ -9,6 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const toast = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,16 +27,33 @@ const Login = () => {
         } else {
           navigate("/preferences");
         }
+        toast.current.show({
+          severity: "success",
+          summary: "Success",
+          detail: "Login successful",
+          life: 3000,
+        });
       } else {
-        alert(data.error);
+        toast.current.show({
+          severity: "error",
+          summary: "Error",
+          detail: data.error,
+          life: 3000,
+        });
       }
     } catch (error) {
-      alert(error.response.data.error);
+      toast.current.show({
+        severity: "error",
+        summary: "Error",
+        detail: error.response.data.error,
+        life: 3000,
+      });
     }
   };
 
   return (
     <div className="login-container">
+      <Toast ref={toast} />
       <div className="login-form-container">
         <img src={logo} alt="CNNCT Logo" className="login-logo" />
         <form onSubmit={handleSubmit} className="login-form">

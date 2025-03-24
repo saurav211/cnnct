@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { Toast } from "primereact/toast";
 import api from "../interceptor";
 import "../styles/Signup.css";
 import logo from "../assets/logo.png";
@@ -11,20 +12,33 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
+  const toast = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const body = { firstName, lastName, email, password, confirmPassword };
       const response = await api.post("/user/signup", body);
+      toast.current.show({
+        severity: "success",
+        summary: "Success",
+        detail: "Signup successful",
+        life: 3000,
+      });
       navigate("/login");
     } catch (error) {
-      alert(error.response.data.error);
+      toast.current.show({
+        severity: "error",
+        summary: "Error",
+        detail: error.response.data.error,
+        life: 3000,
+      });
     }
   };
 
   return (
     <div className="signup-container">
+      <Toast ref={toast} />
       <div className="signup-form-container">
         <img src={logo} alt="CNNCT Logo" className="signup-logo" />
         <form onSubmit={handleSubmit} className="signup-form">

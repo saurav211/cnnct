@@ -76,8 +76,37 @@ const preferences = async (req, res) => {
   }
 };
 
+const updateProfile = async (req, res) => {
+  const { firstName, lastName, email, password, confirmPassword } = req.body;
+  if (password && password !== confirmPassword) {
+    return res.status(400).json({ error: "Passwords do not match" });
+  }
+  try {
+    const user = await User.findById(req.user._id);
+    if (firstName) user.firstName = firstName;
+    if (lastName) user.lastName = lastName;
+    if (email) user.email = email;
+    if (password) user.password = password;
+    await user.save();
+    res.json({ message: "Profile updated successfully" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select("-password");
+    res.json(user);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   signup,
   login,
   preferences,
+  updateProfile,
+  getProfile,
 };
