@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import api from "../interceptor";
 
 const localizer = momentLocalizer(moment);
 
@@ -13,31 +14,27 @@ const Calender = () => {
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
 
-  const [events, setEvents] = useState([
-    {
-      title: "Meeting",
-      start: new Date(today.setHours(10, 0)),
-      end: new Date(today.setHours(12, 0)),
-    },
-    {
-      title: "Lunch",
-      start: new Date(tomorrow.setHours(12, 0)),
-      end: new Date(tomorrow.setHours(13, 0)),
-    },
-    {
-      title: "Conference",
-      start: new Date(yesterday.setHours(9, 0)),
-      end: new Date(yesterday.setHours(10, 0)),
-    },
-  ]);
+  useEffect(() => {
+    getCalendarEvents();
+  }, []);
+
+  const getCalendarEvents = async () => {
+    const response = await api.get("/event/getCalendarEvents");
+    if (response.data) {
+      const eventsData = response.data.map((val) => {
+        val.start = new Date(val.start);
+        val.end = new Date(val.end);
+        return val;
+      });
+      setEvents(eventsData);
+    }
+  };
+
+  const [events, setEvents] = useState([]);
 
   const eventPropGetter = (event) => {
     const eventDate = new Date(event.start);
-    if (
-      eventDate.getFullYear() === yesterday.getFullYear() &&
-      eventDate.getMonth() === yesterday.getMonth() &&
-      eventDate.getDate() === yesterday.getDate()
-    ) {
+    if (eventDate < today) {
       return { style: { backgroundColor: "gray" } };
     }
     return {};

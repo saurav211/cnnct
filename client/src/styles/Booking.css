@@ -1,0 +1,45 @@
+.bookingBody {
+  max-width: 95%;
+  margin-top: 2rem;
+}
+
+.BookingCardCont {
+  display: flex;
+  justify-content: space-between;
+}
+.BookingTitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.pendingCont {
+  display: flex;
+  gap: 1rem;
+}
+
+.rejectedStatus {
+  background: dimgray;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-weight: 500;
+}
+.approvedStatus {
+  background: #f3f3f1;
+  border: solid 1px lightgray;
+  color: black;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+}
+.dialogUserList {
+  display: flex;
+  justify-content: space-between;
+}
+
+.p-checkbox-icon {
+  color: darkgray;
+}
+.p-checkbox-box {
+  background: none;
+  border-color: darkgray;
+}

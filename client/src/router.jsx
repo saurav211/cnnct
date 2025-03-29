@@ -18,23 +18,53 @@ import Settings from "./components/Settings";
 import AddEvent from "./components/addEvent";
 
 const PrivateRoute = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     setIsAuthenticated(!!token);
   }, []);
-  // console.log("isAuthenticated:", isAuthenticated);
-  return isAuthenticated ? children : children;
+  return isAuthenticated ? children : <Navigate to="/login" />;
+};
+
+const CheckAlreadyLoggedIn = ({ children }) => {
+  const [isLoggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setLoggedIn(!!token);
+  }, []);
+  return isLoggedIn ? <Navigate to="/events" /> : children;
 };
 
 const AppRouter = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/" element={<Landing />} />
+        <Route
+          path="/login"
+          element={
+            <CheckAlreadyLoggedIn>
+              <Login />
+            </CheckAlreadyLoggedIn>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <CheckAlreadyLoggedIn>
+              <Signup />
+            </CheckAlreadyLoggedIn>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <CheckAlreadyLoggedIn>
+              <Landing />
+            </CheckAlreadyLoggedIn>
+          }
+        />
         <Route
           path="/preferences"
           element={

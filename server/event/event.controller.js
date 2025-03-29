@@ -91,11 +91,37 @@ const updateEvent = async (req, res) => {
 const getUserEvents = async (req, res) => {
   const { status } = req.query;
   try {
-    const events = await Event.find({
-      "users.userId": req.user._id,
-      "users.status": status,
-    });
+    let events;
+    if (status) {
+      events = await Event.find({
+        "users.email": req.user.email,
+        "users.status": status,
+      });
+    } else {
+      events = await Event.find({
+        "users.email": req.user.email,
+      });
+    }
     res.json(events);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getCalendarEvents = async (req, res) => {
+  try {
+    const events = await Event.find({
+      "users.email": req.user.email,
+      "users.status": "Accept",
+    });
+
+    const simplifiedEvents = events.map((event) => ({
+      title: event.title,
+      start: event.start,
+      end: event.end,
+    }));
+
+    res.json(simplifiedEvents);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -105,7 +131,7 @@ const updateUserStatus = async (req, res) => {
   const { eventId, status } = req.body;
   try {
     const event = await Event.findOneAndUpdate(
-      { _id: eventId, "users.userId": req.user._id },
+      { _id: eventId, "users.email": req.user.email },
       { $set: { "users.$.status": status } },
       { new: true }
     );
@@ -145,4 +171,5 @@ module.exports = {
   updateUserStatus,
   deleteEvent,
   getEventById,
+  getCalendarEvents,
 };

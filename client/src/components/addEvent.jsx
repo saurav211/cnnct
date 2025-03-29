@@ -23,15 +23,15 @@ const AddEvent = () => {
 
   useEffect(() => {
     const data = localStorage.getItem("token");
-    const decodedToken = jwtDecode(data);
-    console.log("de", decodedToken);
-    let user = {
-      email: decodedToken._doc.email,
-      id: decodedToken._doc._id,
-      name: decodedToken._doc.firstName + decodedToken._doc.lastName,
-    };
-    console.log("user", user);
-    setHostList([user]);
+    if (data) {
+      const decodedToken = jwtDecode(data);
+      let user = {
+        email: decodedToken._doc.email,
+        id: decodedToken._doc._id,
+        name: decodedToken._doc.firstName + " " + decodedToken._doc.lastName,
+      };
+      setHostList([user]);
+    }
   }, []);
 
   useEffect(() => {
@@ -138,7 +138,6 @@ const AddEvent = () => {
       });
       return;
     }
-    console.log("formData", formData);
     setStep(2);
   };
 
@@ -171,8 +170,6 @@ const AddEvent = () => {
       return;
     }
 
-    console.log("formData", formData);
-
     try {
       let response;
       if (id) {
@@ -180,8 +177,7 @@ const AddEvent = () => {
       } else {
         response = await api.post("/event/create", formData);
       }
-      console.log("Response", response);
-      if (response && response.status == 201) {
+      if (response && response.data) {
         toast.current.show({
           severity: "success",
           summary: response.data.message,
@@ -273,7 +269,6 @@ const AddEvent = () => {
                       optionLabel="name"
                       style={{ width: "100%" }}
                       onChange={(e) => {
-                        console.log("e", e);
                         setFormData({ ...formData, hostname: e.value });
                       }}
                     ></Dropdown>
@@ -370,7 +365,7 @@ const AddEvent = () => {
                         className="preDefinedColor"
                         style={{ background: "orange" }}
                         onClick={() => {
-                          formData.backgroundColor = "orange";
+                          formData.backgroundColor = "#ffa500";
                           setFormData({ ...formData });
                         }}
                       ></div>
@@ -378,7 +373,7 @@ const AddEvent = () => {
                         className="preDefinedColor"
                         style={{ background: "yellow" }}
                         onClick={() => {
-                          formData.backgroundColor = "yellow";
+                          formData.backgroundColor = "#ffff00";
                           setFormData({ ...formData });
                         }}
                       ></div>
@@ -386,7 +381,7 @@ const AddEvent = () => {
                         className="preDefinedColor"
                         style={{ background: "black" }}
                         onClick={() => {
-                          formData.backgroundColor = "black";
+                          formData.backgroundColor = "#000000";
                           setFormData({ ...formData });
                         }}
                       ></div>
@@ -432,7 +427,6 @@ const AddEvent = () => {
                   <Chips
                     value={formData.users}
                     onChange={(e) => {
-                      console.log("value", e.target.value);
                       if (
                         !validateEmail(
                           e.target.value[e.target.value.length - 1]

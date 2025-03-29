@@ -10,13 +10,12 @@
 
 .eventBodyCont {
   margin-top: 2rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   gap: 1rem;
 }
 
 .event-card {
-  min-width: 20rem;
-  max-width: 30rem;
   border-radius: 10px;
   overflow: hidden;
   flex: 1;

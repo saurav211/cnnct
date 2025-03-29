@@ -117,3 +117,9 @@
   margin-top: 1rem;
   margin-bottom: 2rem;
 }
+.colorSelect .p-inputtext {
+  width: auto;
+}
+.p-colorpicker .p-inputtext {
+  width: 2rem !important;
+}
