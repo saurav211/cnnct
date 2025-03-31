@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Toast } from "primereact/toast";
 import api from "../interceptor";
 import { useNavigate } from "react-router-dom";
-import "../styles/preferences.css";
+import "../styles/Preferences.css";
 import logo from "../assets/logo.png";
 import { InputText } from "primereact/inputtext";
 import finance from "../assets/finance.png";
