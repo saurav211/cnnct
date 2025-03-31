@@ -1,0 +1,71 @@
+.preferenceCont {
+  height: 100vh;
+  display: flex;
+}
+.leftCont {
+  flex: 3;
+  padding: 4rem;
+}
+.preference-bg {
+  flex: 1;
+  background-image: url("../assets/login-bgimg.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.formCont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 3rem;
+}
+
+.formPref {
+  width: 100%;
+  max-width: 50rem;
+  margin-top: 5rem;
+}
+
+.professionSelect {
+  margin-top: 2rem;
+}
+.proffesionListCont {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 1rem;
+}
+
+.proffestionCard {
+  padding: 1rem;
+  font-size: 1.5rem;
+  border: solid 2px lightgray;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+}
+.proffestionCard:hover {
+  background: whitesmoke;
+}
+
+.proffestionCardSelected {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+.proffesionIcon {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .leftCont {
+    padding: 1rem;
+  }
+  .preference-bg {
+    display: none;
+  }
+  .formPref {
+    margin-top: 1rem;
+  }
+}

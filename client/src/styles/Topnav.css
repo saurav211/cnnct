@@ -1,14 +1,13 @@
-.topnavCont{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem  1rem;
+.topnavCont {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
 }
 
-.brandLogoTop img{
-    width: 5rem;
+.brandLogoTop img {
 }
 
-.profileTop img{
-    width: 2rem;
+.profileTop img {
+  width: 3rem;
 }

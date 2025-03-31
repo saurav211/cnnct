@@ -6,19 +6,29 @@ import "../styles/Signup.css";
 import logo from "../assets/logo.png";
 
 const Signup = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   const navigate = useNavigate();
   const toast = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      toast.current.show({
+        severity: "warn",
+        summary: "Warning",
+        detail: "Passwords do not match",
+        life: 3000,
+      });
+      return;
+    }
     try {
-      const body = { firstName, lastName, email, password, confirmPassword };
-      const response = await api.post("/user/signup", body);
+      await api.post("/user/signup", formData);
       toast.current.show({
         severity: "success",
         summary: "Success",
@@ -30,7 +40,7 @@ const Signup = () => {
       toast.current.show({
         severity: "error",
         summary: "Error",
-        detail: error.response.data.error,
+        detail: error.response?.data?.error || "Signup failed",
         life: 3000,
       });
     }
@@ -42,45 +52,60 @@ const Signup = () => {
       <div className="signup-form-container">
         <img src={logo} alt="CNNCT Logo" className="signup-logo" />
         <form onSubmit={handleSubmit} className="signup-form">
-          <h2>Signup</h2>
+          <h2>Create an account</h2>
           <input
             type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
             placeholder="First Name"
+            value={formData.firstName}
+            onChange={(e) =>
+              setFormData({ ...formData, firstName: e.target.value })
+            }
             required
           />
           <input
             type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
             placeholder="Last Name"
+            value={formData.lastName}
+            onChange={(e) =>
+              setFormData({ ...formData, lastName: e.target.value })
+            }
             required
           />
           <input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             required
           />
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
             required
           />
           <input
             type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={(e) =>
+              setFormData({ ...formData, confirmPassword: e.target.value })
+            }
             required
           />
           <button type="submit">Signup</button>
           <a href="/login">Sign in instead</a>
         </form>
+        <div className="privacyText">
+          This site is protected by reCAPTCHA and the{" "}
+          <span className="privacyLink">Google Privacy Policy</span> and
+          <span className="privacyLink">Terms of Service</span> apply.
+        </div>
       </div>
       <div className="signup-bg"></div>
     </div>

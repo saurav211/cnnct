@@ -16,6 +16,7 @@ import App from "./App";
 import Booking from "./components/Booking";
 import Settings from "./components/Settings";
 import AddEvent from "./components/addEvent";
+import { jwtDecode } from "jwt-decode";
 
 const PrivateRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -25,6 +26,22 @@ const PrivateRoute = ({ children }) => {
     setIsAuthenticated(!!token);
   }, []);
   return isAuthenticated ? children : <Navigate to="/login" />;
+};
+
+const PrefPrivateRoute = ({ children }) => {
+  const [isPrefAuthenticated, setPrefIsAuthenticated] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    const decodedToken = jwtDecode(token);
+    console.log("deco", decodedToken._doc.username);
+    if (decodedToken && decodedToken._doc.username) {
+      console.log("deco", decodedToken._doc.username);
+      setPrefIsAuthenticated(false);
+    }
+  }, []);
+  return isPrefAuthenticated ? children : <Navigate to="/events" />;
 };
 
 const CheckAlreadyLoggedIn = ({ children }) => {
@@ -68,9 +85,9 @@ const AppRouter = () => {
         <Route
           path="/preferences"
           element={
-            <PrivateRoute>
+            <PrefPrivateRoute>
               <Preferences />
-            </PrivateRoute>
+            </PrefPrivateRoute>
           }
         />
         <Route

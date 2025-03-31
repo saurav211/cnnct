@@ -77,8 +77,17 @@ const BookingCard = ({ data, fetchBooking }) => {
       <div className="BookingTimeDetail">
         <div>{new Date(dateTime).toDateString()}</div>
         <div style={{ color: "var(--primary-color)" }}>
-          {new Date(start).toLocaleTimeString()} -{" "}
-          {new Date(end).toLocaleTimeString()}
+          {new Date(start).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          })}{" "}
+          -{" "}
+          {new Date(end).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          })}
         </div>
       </div>
       <div className="BookingInfoDetail">

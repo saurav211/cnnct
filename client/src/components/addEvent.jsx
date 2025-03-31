@@ -337,7 +337,7 @@ const AddEvent = () => {
                       navigate("/events");
                     }}
                   ></Button>
-                  <Button label="Save" rounded onClick={nextStep}></Button>
+                  <Button label="Next" rounded onClick={nextStep}></Button>
                 </div>
               </div>
             </>

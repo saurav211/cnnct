@@ -31,6 +31,8 @@
 .signup-form {
   width: 100%;
   max-width: 400px;
+  flex: auto;
+  margin-top: 15%;
 }
 
 .signup-form h2 {
@@ -71,4 +73,10 @@
 
 .signup-form a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .signup-bg {
+    display: none !important;
+  }
 }

@@ -7,7 +7,7 @@ const availableTimeSchema = new mongoose.Schema({
 });
 
 const activitySchema = new mongoose.Schema({
-  day: { type: String, required: true, unique: true },
+  day: { type: String, required: true },
   isAvailable: { type: Boolean, required: true },
   availableTimes: [availableTimeSchema],
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },

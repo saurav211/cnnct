@@ -11,9 +11,7 @@ const signup = async (req, res) => {
       return res.status(400).json({ error: "Passwords do not match" });
     }
     const user = new User({ firstName, lastName, email, password });
-    await user.save();
 
-    // Add activity data for the new user
     const activityData = [
       { day: "Sunday", isAvailable: false, availableTimes: [], user: user._id },
       { day: "Monday", isAvailable: true, availableTimes: [], user: user._id },
@@ -39,6 +37,7 @@ const signup = async (req, res) => {
       },
     ];
     await Activity.insertMany(activityData);
+    await user.save();
 
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
@@ -67,10 +66,13 @@ const login = async (req, res) => {
 const preferences = async (req, res) => {
   const { proffesion, username } = req.body;
   try {
+    console.log("profession", proffesion);
     req.user.proffesion = proffesion;
     req.user.username = username;
+    console.log("user", req.user);
     await req.user.save();
-    res.json({ message: "Preferences updated successfully" });
+    const token = jwt.sign({ ...req.user }, process.env.JWT_SECRET);
+    res.json({ message: "Preferences updated successfully", token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
